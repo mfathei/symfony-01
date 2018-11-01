@@ -13,26 +13,32 @@ use App\Security\VeryBadDesign;
 use App\Service\Greeting;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BlogController extends AbstractController
+class BlogController
 {
     private $greeting;
-    private $badDesign;
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
 
-    public function __construct(Greeting $greeting, VeryBadDesign $badDesign)
+    public function __construct(Greeting $greeting, \Twig_Environment $twig)
     {
         $this->greeting = $greeting;
-        $this->badDesign = $badDesign;
+        $this->twig = $twig;
     }
 
     /**
-     * @Route("/", name="blog_index")
+     * @Route("/{name}", name="blog_index")
      */
-    public function index(Request $request)
+    public function index($name)
     {
-        return $this->render('base.html.twig', [
-            'message' => $this->greeting->greet($request->get('name'))
+        $html = $this->twig->render('base.html.twig', [
+            'message' => $this->greeting->greet($name)
         ]);
+
+        return new Response($html);
     }
 }
