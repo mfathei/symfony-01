@@ -7,5 +7,6 @@
         <p><a href="{{ path('blog_show', {'id': id}) }}">{{ id }}</a></p>
         <h2>{{ post.title }}</h2>
         <p>{{ post.text }}</p>
+        <p>Date {{ post.date | date('H:i:s') }}</p>
     {% endfor %}
 {% endblock %}
