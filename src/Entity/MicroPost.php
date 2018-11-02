@@ -24,10 +24,30 @@ class MicroPost
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $time;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
+
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    public function setTime($time): void
+    {
+        $this->time = $time;
     }
 }
