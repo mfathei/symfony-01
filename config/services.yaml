@@ -38,6 +38,10 @@ services:
 #        arguments:
 #            $message: 'Hello from service'
 #            $message: '%greeting_message%'
+    App\Twig\AppExtension:
+        arguments:
+            $locale: '%locale%'
+
     # aliases
     app.greeting:
         public: true
