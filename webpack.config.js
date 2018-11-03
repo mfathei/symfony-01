@@ -21,7 +21,8 @@ Encore
         [
             './node_modules/jquery/dist/jquery.slim.js',
             './node_modules/popper.js/dist/popper.js',
-            './node_modules/bootstrap/dist/js/bootstrap.js'
+            './node_modules/bootstrap/dist/js/bootstrap.js',
+            './node_modules/holderjs/holder.js'
         ]
     )
     .addStyleEntry('css/app', ['./node_modules/bootstrap/dist/css/bootstrap.css'])
