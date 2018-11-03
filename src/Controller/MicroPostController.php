@@ -62,7 +62,7 @@ class MicroPostController extends AbstractController
      */
     public function index()
     {
-        $posts = $this->microPostRepository->findAll();
+        $posts = $this->microPostRepository->findBy([],['time' => 'desc']);
 
         $html = $this->twig->render('micro-post/index.html.twig', [
             'posts' => $posts
@@ -107,5 +107,27 @@ class MicroPostController extends AbstractController
         return new Response(
             $this->twig->render('micro-post/post.html.twig', ['post' => $post])
         );
+    }
+
+    /**
+     * @Route("/{id}/edit", name="micro_post_edit")
+     */
+    public function edit(MicroPost $microPost, Request $request)
+    {
+
+        $form = $this->formFactory->create(MicroPostType::class, $microPost);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+
+            return new RedirectResponse($this->router->generate('micro_post_index'));
+        }
+
+        return new Response($this->twig->render('micro-post/add.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        ));
     }
 }
