@@ -18,14 +18,14 @@ class MicroPostVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::DELETE])
-            && $subject instanceof App\Entity\BlogPost;
+            && $subject instanceof MicroPost;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
-        if (!$user instanceof User) {
+        if (!$user instanceof UserInterface) {
             return false;
         }
 
