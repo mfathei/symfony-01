@@ -103,7 +103,7 @@ class MicroPostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $microPost->setTime(new \DateTime());
+//            $microPost->setTime(new \DateTime());
 
             $this->entityManager->persist($microPost);
             $this->entityManager->flush();
