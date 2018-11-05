@@ -22,9 +22,10 @@ class NotificationRepository extends ServiceEntityRepository
 
     public function findUnseenByUser(User $user)
     {
-        return $this->createQueryBuilder()
-            ->select('count(u)')
-            ->where('u.user', $user)
+        return $this->createQueryBuilder('n')
+            ->select('count(n)')
+            ->where('n.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getSingleScalarResult();
     }
