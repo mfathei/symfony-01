@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * @Route("/micro-post")
  */
-class MicroPostController extends AbstractController
+class MicroPostController
 {
     /**
      * @var \Twig_Environment
@@ -79,9 +79,18 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/", name="micro_post_index")
      */
-    public function index()
+    public function index(TokenStorageInterface $tokenStorage)
     {
-        $posts = $this->microPostRepository->findBy([], ['time' => 'desc']);
+        $currentUser = $tokenStorage->getToken()->getUser();
+
+        if ($currentUser instanceof User)
+        {
+            $following = $currentUser->getFollowing();
+
+            $posts = $this->microPostRepository->findAllByUsers($following);
+        } else {
+            $posts = $this->microPostRepository->findBy([], ['time' => 'desc']);
+        }
 
         $html = $this->twig->render('micro-post/index.html.twig', [
             'posts' => $posts
