@@ -14,8 +14,15 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
-                    {{ user.fullName }}
+                    {{ user.fullName }} <small class="text-muted"> . @{{ user.username }}</small>
                 </h5>
+                {% if user != app.user %}
+                    {% if user.followers.contains(app.user) == false %}
+                        <a href="{{ path('following_follow', {'id': user.id}) }}" class="btn btn-outline-primary">Follow</a>
+                    {%  else %}
+                        <a href="{{ path('following_unfollow', {'id': user.id}) }}" class="btn btn-outline-danger">UnFollow</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
