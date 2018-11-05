@@ -26,11 +26,16 @@ class LikeController extends AbstractController
         }
 
         $microPost->like($currentUser);
+        $this->getDoctrine()->getManager()->flush();
+
         return new JsonResponse([
             'count' => $microPost->getLikedBy()->count()
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * @Route("/unlike/{id}", name="likes_unlike")
+     */
     public function unlike(MicroPost $microPost)
     {
         $currentUser = $this->getUser();
@@ -40,6 +45,8 @@ class LikeController extends AbstractController
         }
 
         $microPost->getLikedBy()->removeElement($currentUser);
+        $this->getDoctrine()->getManager()->flush();
+
         return new JsonResponse([
             'count' => $microPost->getLikedBy()->count()
         ], Response::HTTP_CREATED);

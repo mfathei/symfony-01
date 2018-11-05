@@ -4,4 +4,69 @@
 
 {% block body %}
     {{ include('micro-post/raw-post.html.twig', {'post': post}) }}
+
+    {% set isLiked = post.getLikedBy.contains(app.user) %}
+
+    <div class="pt-3">
+        <button id="like" class="btn btn-outline-primary btn-sm"
+                style="display: {% if not isLiked %}block{% else %}none{% endif %}">Like
+            <small id="likes-like" class="badge badge-light">{{ post.getLikedBy.count }}</small>
+        </button>
+        <button id="unlike" class="btn btn-outline-danger btn-sm"
+                style="display: {% if isLiked %}block{% else %}none{% endif %}">UnLike
+            <small id="likes-unlike" class="badge badge-light">{{ post.getLikedBy.count }}</small>
+        </button>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        var likeButton = document.getElementById('like');
+        var unlikeButton = document.getElementById('unlike');
+
+        addClickEvent(likeButton, unlikeButton,
+            document.getElementById('likes-unlike'),
+            '{{ path('likes_like', {"id": post.id}) }}'
+        );
+
+        addClickEvent(unlikeButton, likeButton,
+            document.getElementById('likes-like'),
+            '{{ path('likes_unlike', {"id": post.id}) }}'
+        );
+
+        function switchButtons(button, oppositeButton) {
+            button.disabled = false;
+            button.style.display = 'none';
+            oppositeButton.style.display = 'block';
+        }
+
+        function addClickEvent(button, oppositeButton, likeCount, url) {
+
+            button.addEventListener('click', function (event) {
+                {% if not app.user %}
+                    return window.location.replace('{{ path('register') }}');
+                {% endif %}
+                button.disabled = true;
+
+                fetch(url, {'credentials': 'include'})
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        likeCount.innerText = data.count;
+                        switchButtons(button, oppositeButton);
+                    })
+                    .catch(function (err) {
+                        console.error(err);
+                        switchButtons(oppositeButton, button);
+                    });
+
+                event.preventDefault();
+            })
+
+        }
+    </script>
 {% endblock %}
