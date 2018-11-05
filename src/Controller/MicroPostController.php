@@ -127,7 +127,7 @@ class MicroPostController extends AbstractController
 
         $posts = $user->getPosts();// lazy loading
 
-        return new Response($this->twig->render('micro-post/user-posts.html.twig', ['posts' => $posts]));
+        return new Response($this->twig->render('micro-post/user-posts.html.twig', ['posts' => $posts, 'user' => $user]));
     }
 
     /**
