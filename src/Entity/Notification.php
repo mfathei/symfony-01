@@ -48,6 +48,23 @@ abstract class Notification
     }
 
     /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @param mixed $seen
+     */
+    public function setSeen($seen): void
+    {
+        $this->seen = $seen;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getSeen()
