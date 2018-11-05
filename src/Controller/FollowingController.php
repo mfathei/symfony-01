@@ -18,11 +18,13 @@ class FollowingController extends AbstractController
      */
     public function follow(User $userToFollow)
     {
+        /** @var User $user */
         $user = $this->getUser();
-        $user->getFollowing()->add($userToFollow);
+        if($user->getId() !== $userToFollow->getId()) {
+            $user->getFollowing()->add($userToFollow);
 
-        $this->getDoctrine()->getManager()->flush();
-
+            $this->getDoctrine()->getManager()->flush();
+        }
         return $this->redirectToRoute('user_micro_posts', ['username' => $userToFollow->getUsername()]);
     }
 
@@ -31,11 +33,13 @@ class FollowingController extends AbstractController
      */
     public function unfollow(User $userToUnfollow)
     {
+        /** @var User $user */
         $user = $this->getUser();
-        $user->getFollowing()->removeElement($userToUnfollow);
+        if ($user->getId() !== $userToUnfollow->getId()) {
+            $user->getFollowing()->removeElement($userToUnfollow);
 
-        $this->getDoctrine()->getManager()->flush();
-
+            $this->getDoctrine()->getManager()->flush();
+        }
         return $this->redirectToRoute('user_micro_posts', ['username' => $userToUnfollow->getUsername()]);
     }
 }
