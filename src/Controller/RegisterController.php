@@ -24,6 +24,7 @@ class RegisterController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
+            $user->setRoles(['ROLE_USER']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
