@@ -50,6 +50,10 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default}
 
+    App\Event\LocaleSubscriber:
+        arguments:
+            $defaultLocale: '%kernel.default_locale%'
+
     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
         arguments:
 #            - {'mysql:dbname=sessiondb'}
