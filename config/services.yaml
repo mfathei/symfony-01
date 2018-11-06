@@ -54,6 +54,10 @@ services:
         arguments:
             $defaultLocale: '%kernel.default_locale%'
 
+    App\Event\UserSubscriber:
+        arguments:
+            $defaultLocale: '%kernel.default_locale%'
+
     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
         arguments:
 #            - {'mysql:dbname=sessiondb'}
