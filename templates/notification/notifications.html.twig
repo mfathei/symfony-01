@@ -6,21 +6,37 @@
 
     <div class="card-group py-2">
         <div class="card">
+            {% if notifications|length %}
             <div class="card-body">
                 <h5 class="card-title">UnRead Notifications</h5>
-                <ul class="list-goup list-group-flush">
-                    {% for notification in notifications %}
-                        {% if notification is like %}
-                            <li class="list-group-item px-0">
-                                <a href="{{ path('user_micro_posts', {'username': notification.getLikedBy.username}) }}">
-                                    @{{ notification.likedBy.username }}</a>
-                                liked your
-                                <a href="{{ path('micro_post_post', {'id': notification.getMicroPost.id}) }}">post</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
             </div>
+            <ul class="list-goup list-group-flush">
+                <li class="list-group-item border-0">
+                    <a href="{{ path('notification_acknowledge_all') }}"
+                       class="btn btn-default btn-outline-info btn-block btn-link">
+                        Mark all as read
+                    </a>
+                </li>
+                {% for notification in notifications %}
+                    {% if notification is like %}
+                        <li class="list-group-item px-10">
+                            <a href="{{ path('notification_acknowledge', {'id': notification.id}) }}"
+                            class="btn btn-primary btn-sm float-right">
+                                OK
+                            </a>
+                            <a href="{{ path('user_micro_posts', {'username': notification.getLikedBy.username}) }}">
+                                @{{ notification.likedBy.username }}</a>
+                            liked your
+                            <a href="{{ path('micro_post_post', {'id': notification.getMicroPost.id}) }}">post</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% else %}
+                <div class="card-body">
+                    You have no new notifications
+                </div>
+            {% endif %}
         </div>
     </div>
 
