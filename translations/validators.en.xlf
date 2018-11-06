@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="user_already_exists">
                 <source>user.already_exists</source>
-                <target>This usernamefdfeee already existing</target>
+                <target>This username already existing</target>
             </trans-unit>
 
             <trans-unit id="email_already_exists">
