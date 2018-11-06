@@ -27,6 +27,11 @@ Please confirm your account by clicking <a href="%confirm-link%">this link.</a>
 To login got to <a
         href="%login-link%">the login page</a>. <br><p>Thanks.</p>]]></target>
             </trans-unit>
+
+            <trans-unit id="user.followers">
+                <source>user.followers</source>
+                <target>{0} No followers|{1} 1 Follower|]1,Inf[ %count% Followers</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
