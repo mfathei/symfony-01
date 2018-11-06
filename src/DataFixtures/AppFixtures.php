@@ -17,11 +17,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
-
     private const USERS = [
         [
             'username' => 'john_doe',
@@ -45,7 +40,6 @@ class AppFixtures extends Fixture
             'roles' => [User::ROLE_ADMIN]
         ],
     ];
-
     private const POST_TEXT = [
         'Hello, how are you?',
         'It\'s nice sunny weather today',
@@ -57,6 +51,10 @@ class AppFixtures extends Fixture
         'Did you watch the game yesterday?',
         'How was your day?'
     ];
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -69,28 +67,13 @@ class AppFixtures extends Fixture
         $this->loadMicroPosts($manager);
     }
 
-    private function loadMicroPosts(ObjectManager $manager)
-    {
-        for ($i = 0; $i < 30; $i++) {
-            $microPost = new MicroPost();
-            $microPost->setText('Some random text ' . rand(0, 100));
-            $date = new \DateTime();
-            $date->modify('-'. rand(0, 10) .' days');
-            $microPost->setTime($date);
-            $microPost->setUser($this->getReference(self::USERS[rand(0, 2)]['username']));
-            $manager->persist($microPost);
-        }
-
-        $manager->flush();
-    }
-
     private function loadUsers(ObjectManager $manager)
     {
-        foreach (self::USERS as $userData)
-        {
+        foreach (self::USERS as $userData) {
             $user = new User();
             $user->setUsername($userData['username']);
             $user->setFullName($userData['fullName']);
+            $user->setEnabled(true);
             $user->setEmail($userData['email']);
             $user->setPassword($this->passwordEncoder->encodePassword($user, $userData['password']));
             $user->setRoles($userData['roles']);
@@ -98,6 +81,21 @@ class AppFixtures extends Fixture
             $this->addReference($userData['username'], $user);
 
             $manager->persist($user);
+        }
+
+        $manager->flush();
+    }
+
+    private function loadMicroPosts(ObjectManager $manager)
+    {
+        for ($i = 0; $i < 30; $i++) {
+            $microPost = new MicroPost();
+            $microPost->setText('Some random text ' . rand(0, 100));
+            $date = new \DateTime();
+            $date->modify('-' . rand(0, 10) . ' days');
+            $microPost->setTime($date);
+            $microPost->setUser($this->getReference(self::USERS[rand(0, 2)]['username']));
+            $manager->persist($microPost);
         }
 
         $manager->flush();

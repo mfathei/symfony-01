@@ -1,2 +1,6 @@
-<h3>Welcome to the app!</h3>Hello {{ user.fullName }}, You've registered to micro-post app, To login got to <a
+<h3>Welcome to the app!</h3>Hello {{ user.fullName }}, <br><br>
+You've registered to micro-post app.<br>
+Please confirm your account by clicking <a href="{{ path('security_confirm', {'token': user.confirmationToken}) }}">this link.</a>
+<br>
+To login got to <a
         href="{{ path('security_login') }}">the login page</a>. <br>Thanks.
