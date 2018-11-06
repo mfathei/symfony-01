@@ -50,6 +50,13 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default}
 
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+        arguments:
+#            - {'mysql:dbname=sessiondb'}
+#            - {db_username: user, db_password: password}
+            - !service {class: PDO, factory: 'database_connection:getWrappedConnection'}
+            - {lock_mode: 1}
+
     # aliases
     app.greeting:
         public: true
