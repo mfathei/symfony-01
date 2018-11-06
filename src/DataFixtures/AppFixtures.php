@@ -11,6 +11,7 @@ namespace App\DataFixtures;
 
 use App\Entity\MicroPost;
 use App\Entity\User;
+use App\Entity\UserPreferences;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -40,6 +41,7 @@ class AppFixtures extends Fixture
             'roles' => [User::ROLE_ADMIN]
         ],
     ];
+
     private const POST_TEXT = [
         'Hello, how are you?',
         'It\'s nice sunny weather today',
@@ -51,6 +53,8 @@ class AppFixtures extends Fixture
         'Did you watch the game yesterday?',
         'How was your day?'
     ];
+
+    private const LOCALES = ['en', 'fr'];
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -77,6 +81,12 @@ class AppFixtures extends Fixture
             $user->setEmail($userData['email']);
             $user->setPassword($this->passwordEncoder->encodePassword($user, $userData['password']));
             $user->setRoles($userData['roles']);
+
+            $preferences = new UserPreferences();
+            $preferences->setLocale(self::LOCALES[rand(0, count(self::LOCALES) - 1)]);
+            $manager->persist($preferences);
+
+            $user->setPreferences($preferences);
 
             $this->addReference($userData['username'], $user);
 
