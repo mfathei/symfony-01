@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="home_post_list">
+                <source>home.post_list</source>
+                <target>Recent Updates France</target>
+            </trans-unit>
+
+            <trans-unit id="register_username">
+                <source>register.username</source>
+                <target>Username</target>
+            </trans-unit>
+
+            <trans-unit id="register_agree_terms">
+                <source>register.agree_terms</source>
+                <target>I agree to the terms of service</target>
+            </trans-unit>
+
+            <trans-unit id="email.registration">
+                <source>email.registration</source>
+                <target><![CDATA[<h3>Welcome to the app!</h3>
+Hello %name%, <br><br>
+You've registered to micro-post app.<br>
+Please confirm your account by clicking <a href="%confirm-link%">this link.</a>
+<br>
+To login got to <a
+        href="%login-link%">the login page</a>. <br><p>Thanks.</p>]]></target>
+            </trans-unit>
+
+            <trans-unit id="user.followers">
+                <source>user.followers</source>
+                <target>{0} No followers|{1} 1 Follower|]1,Inf[ %count% Followers</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
