@@ -19,7 +19,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
+            ->add('username', TextType::class, ['label' => 'register.username'])
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -30,7 +30,7 @@ class UserType extends AbstractType
             ->add('termsAgreed', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => new IsTrue(),
-                'label' => 'I agree to the terms of service'
+                'label' => 'register.agree_terms'
             ])
             ->add('Register', SubmitType::class);
     }
