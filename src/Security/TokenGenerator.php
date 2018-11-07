@@ -18,7 +18,7 @@ class TokenGenerator
         $maxLength = strlen(self::ALPHABET);
         $token = '';
 
-        for ($i = 0; $i < $maxLength; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             $token .= self::ALPHABET[rand(0, $maxLength - 1)];
         }
 
