@@ -45,6 +45,9 @@ class Mailer
             ->setTo($user->getEmail())
             ->setBody($body, 'text/html');
 
+        /**
+         * Send
+         */
         $this->mailer->send($msg);
     }
 }

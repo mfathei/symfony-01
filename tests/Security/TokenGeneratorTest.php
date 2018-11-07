@@ -19,7 +19,7 @@ class TokenGeneratorTest extends TestCase
         $length = 30;
         $token = $randomTokenGenerator->generateRandomToken($length);
 //        $token[15] = '-';
-        echo $token;
+//        echo $token;
 
         $this->assertEquals($length, strlen($token));
         $this->assertEquals(1, preg_match('/^[A-Za-z0-9]{' . $length . '}$/', $token));
